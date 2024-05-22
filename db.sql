@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS books (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid (),
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+SELECT * FROM books WHERE title ILIKE '%buku%'

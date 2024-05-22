@@ -1,0 +1,4 @@
+[2024-05-22 21:59:18] syntax error, unexpected token "return" in /home/yukebrillianth/PROJECTS/phpmvc/app/Http/Controllers/BookController.php on line 130
+[2024-05-22 22:03:12] SQLSTATE[55000]: Object not in prerequisite state: 7 ERROR:  lastval is not yet defined in this session in /home/yukebrillianth/PROJECTS/phpmvc/app/Core/Database.php on line 153
+[2024-05-22 22:09:37] App\Models\Book::create(): Return value must be of type bool, array returned in /home/yukebrillianth/PROJECTS/phpmvc/app/Models/Book.php on line 53
+[2024-05-22 22:10:16] App\Models\Book::create(): Return value must be of type bool, array returned in /home/yukebrillianth/PROJECTS/phpmvc/app/Models/Book.php on line 53
