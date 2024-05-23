@@ -13,7 +13,7 @@ class BookController extends Controller
     {
         try {
             try {
-                $book = Book::getInstance()->findAll();
+                $book = Book::query()->findAll();
             } catch (PDOException  $e) {
                 return $this->jsonResponse([
                     'success' => false,
@@ -49,7 +49,7 @@ class BookController extends Controller
     {
         try {
             try {
-                $book = Book::getInstance()->findByUuid($uuid);
+                $book = Book::query()->findByUuid($uuid);
             } catch (PDOException  $e) {
                 return $this->jsonResponse([
                     'success' => false,
@@ -84,7 +84,7 @@ class BookController extends Controller
     public function search($keyword)
     {
         try {
-            $book = Book::getInstance()->search($keyword);
+            $book = Book::query()->search($keyword);
 
             if ($book) {
                 // Book found, return JSON response
@@ -125,7 +125,7 @@ class BookController extends Controller
         ];
 
         try {
-            $insertedId = Book::getInstance()->create($data);
+            $insertedId = Book::query()->create($data);
             if ($insertedId) {
                 Logger::log("New book created with " . logData($insertedId));
                 return jsonResponse(['success' => true, 'message' => 'Book added successfully.', 'id' => $insertedId]);

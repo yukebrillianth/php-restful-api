@@ -22,7 +22,7 @@ class AuthController extends Controller
 
         try {
             // check is user exist
-            $userExist = User::getInstance()->findByEmail($_POST['email']);
+            $userExist = User::query()->findByEmail($_POST['email']);
 
             if (!$userExist) {
                 return jsonResponse(['success' => false, 'message' => "Invalid credentials"], 400);

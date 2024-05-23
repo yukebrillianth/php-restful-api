@@ -8,12 +8,7 @@ class Model
 {
     protected Database $db;
     protected string $table;
-
-    /**
-     * 
-     * @var Singleton
-     */
-    private static $instance;
+    protected array $hidden = [];
 
     /**
      * Constructor.
@@ -24,12 +19,75 @@ class Model
         $this->table = $this->getDefaultTableName();
     }
 
-    public static function getInstance()
+    /**
+     * Static method to get a new instance of the class.
+     */
+    public static function query(): static
     {
-        if (is_null(self::$instance)) {
-            self::$instance = new static();
+        return new static();
+    }
+
+    /**
+     * Get query builder with columns selections
+     *
+     * @param string|null $columns
+     * @return array|false
+     */
+    public function get(string $columns = null): array | false
+    {
+        if (!$columns) {
+            // Filter kolom yang disembunyikan
+            if ($this->hidden) {
+                // Ambil semua kolom dari tabel
+                $allColumns = $this->getAllColumns();
+                $filteredColumns = array_filter($allColumns, function ($column) {
+                    return !in_array($column, $this->hidden);
+                });
+                $columns = implode(', ', $filteredColumns);
+            } else {
+                $columns = '*';
+            }
+        } else {
+            $selectedColumns = func_get_args();
+            // Filter kolom yang disembunyikan
+            if ($this->hidden) {
+                $filteredColumns = array_filter($selectedColumns, function ($column) {
+                    return !in_array($column, $this->hidden);
+                });
+                $columns = implode(', ', $filteredColumns);
+            } else {
+                $columns = implode(', ', $selectedColumns);
+            }
         }
-        return self::$instance;
+
+        $query = "SELECT $columns FROM $this->table";
+
+        $this->db->query($query);
+        $this->db->execute();
+
+        return $this->db->resultSet();
+    }
+
+    /**
+     * Get all columns of the table.
+     *
+     * @return array
+     */
+    protected function getAllColumns(): array
+    {
+        $query = "
+            SELECT column_name 
+            FROM information_schema.columns 
+            WHERE table_name = :table_name
+        ";
+        $this->db->query($query);
+        $this->db->bind(':table_name', $this->table);
+        $this->db->execute();
+
+        $columns = $this->db->resultSet();
+        return array_map(function ($column) {
+            return $column['column_name'];
+        }, $columns);
     }
 
     /**

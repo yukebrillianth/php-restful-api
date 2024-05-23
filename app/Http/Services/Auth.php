@@ -31,7 +31,7 @@ class Auth
 
             // Find user by uuid
             try {
-                $user = User::getInstance()->findByUuid($decodedToken->user_id);
+                $user = User::query()->findByUuid($decodedToken->user_id);
                 self::$user = $user ?? null;
                 return self::$user;
             } catch (PDOException $e) {
