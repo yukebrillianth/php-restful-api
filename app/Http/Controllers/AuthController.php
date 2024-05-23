@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use App\Core\Controller;
 use App\Core\Logger;
 use App\Http\Services\Auth;
-use App\Models\Book;
 use App\Models\User;
 use Firebase\JWT\JWT;
-use PDOException;
 
 class AuthController extends Controller
 {

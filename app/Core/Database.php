@@ -25,6 +25,7 @@ class Database
         $password = config('database.password');
 
         $connection = "pgsql:host=$host;port=$port;dbname=$database";
+        Logger::log($connection);
 
         $options = [
             PDO::ATTR_PERSISTENT => true,
@@ -34,7 +35,13 @@ class Database
         try {
             $this->pdo = new PDO($connection, $user, $password, $options);
         } catch (PDOException $e) {
-            die($e->getMessage());
+            Logger::error($e);
+            jsonResponse([
+                'code' => 500,
+                'success' => false,
+                'message' => "Internal Server Error"
+            ], 500);
+            die();
         }
     }
 

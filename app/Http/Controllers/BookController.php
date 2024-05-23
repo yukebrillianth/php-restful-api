@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Core\Controller;
 use App\Core\Logger;
+use App\Http\Services\Auth;
 use App\Models\Book;
 use PDOException;
 
@@ -12,32 +13,21 @@ class BookController extends Controller
     public function get()
     {
         try {
-            try {
-                $book = Book::query()->findAll();
-            } catch (PDOException  $e) {
-                return $this->jsonResponse([
-                    'success' => false,
-                    'message' => 'Internal Server Error'
-                ], 500);
-            }
+            $books = Book::query()->findAll();
 
-            if ($book) {
-                // Book found, return JSON response
+            if ($books) {
                 return $this->jsonResponse([
                     'success' => true,
-                    'data' => $book
+                    'data' => $books
                 ]);
             } else {
-                // Book not found, return JSON response with error
                 return $this->jsonResponse([
                     'success' => false,
-                    'message' => 'Book not found'
-                ], 404); // HTTP status code 404 for "Not Found"
+                    'message' => 'Books not found'
+                ], 404);
             }
         } catch (\Throwable $e) {
-            // Log the exception (you can use Logger class here)
             Logger::error($e);
-            // Respond with internal server error
             return $this->jsonResponse([
                 'success' => false,
                 'message' => 'Internal Server Error'
@@ -48,32 +38,21 @@ class BookController extends Controller
     public function show($uuid)
     {
         try {
-            try {
-                $book = Book::query()->findByUuid($uuid);
-            } catch (PDOException  $e) {
-                return $this->jsonResponse([
-                    'success' => false,
-                    'message' => 'Internal Server Error'
-                ], 500);
-            }
+            $book = Book::query()->findByUuid($uuid);
 
             if ($book) {
-                // Book found, return JSON response
                 return $this->jsonResponse([
                     'success' => true,
                     'data' => $book
                 ]);
             } else {
-                // Book not found, return JSON response with error
                 return $this->jsonResponse([
                     'success' => false,
                     'message' => 'Book not found'
-                ], 404); // HTTP status code 404 for "Not Found"
+                ], 404);
             }
         } catch (\Throwable $e) {
-            // Log the exception (you can use Logger class here)
             Logger::error($e);
-            // Respond with internal server error
             return $this->jsonResponse([
                 'success' => false,
                 'message' => 'Internal Server Error'
@@ -84,25 +63,21 @@ class BookController extends Controller
     public function search($keyword)
     {
         try {
-            $book = Book::query()->search($keyword);
+            $books = Book::query()->search($keyword);
 
-            if ($book) {
-                // Book found, return JSON response
+            if ($books) {
                 return $this->jsonResponse([
                     'success' => true,
-                    'data' => $book
+                    'data' => $books
                 ]);
             } else {
-                // Book not found, return JSON response with error
                 return $this->jsonResponse([
                     'success' => false,
-                    'message' => 'Book not found'
-                ], 404); // HTTP status code 404 for "Not Found"
+                    'message' => 'Books not found'
+                ], 404);
             }
         } catch (\Throwable $e) {
-            // Log the exception (you can use Logger class here)
             Logger::error($e);
-            // Respond with internal server error
             return $this->jsonResponse([
                 'success' => false,
                 'message' => 'Internal Server Error'
@@ -115,27 +90,88 @@ class BookController extends Controller
         // Validate input data
         $validationResult = $this->validate($_POST);
         if ($validationResult !== true) {
-            return jsonResponse(['success' => false, 'message' => "Validation Error", 'errors' => $validationResult], 400);
+            return $this->jsonResponse([
+                'success' => false,
+                'message' => "Validation Error",
+                'errors' => $validationResult
+            ], 400);
         }
 
         $data = [
             'title' => $_POST['title'],
-            'author' => $_POST['author'],
+            'author_id' => Auth::user()['id'],
             'description' => $_POST['description'],
         ];
 
         try {
             $insertedId = Book::query()->create($data);
             if ($insertedId) {
-                Logger::log("New book created with " . logData($insertedId));
-                return jsonResponse(['success' => true, 'message' => 'Book added successfully.', 'id' => $insertedId]);
+                Logger::log("New book created with ID " . $insertedId);
+                return $this->jsonResponse([
+                    'success' => true,
+                    'message' => 'Book added successfully.',
+                    'data' => [
+                        'id' => $insertedId
+                    ]
+                ]);
             } else {
-                return jsonResponse(['success' => false, 'message' => 'Failed to add book.'], 500);
+                return $this->jsonResponse([
+                    'success' => false,
+                    'message' => 'Failed to add book.'
+                ], 500);
             }
         } catch (\Throwable $e) {
-            // Log the exception (you can use Logger class here)
             Logger::error($e);
-            // Respond with internal server error
+            return $this->jsonResponse([
+                'success' => false,
+                'message' => 'Internal Server Error'
+            ], 500);
+        }
+    }
+
+    public function getWithAuthors()
+    {
+        try {
+            $books = Book::query()->withAuthors();
+
+            if ($books) {
+                return $this->jsonResponse([
+                    'success' => true,
+                    'data' => $books
+                ]);
+            } else {
+                return $this->jsonResponse([
+                    'success' => false,
+                    'message' => 'Books not found'
+                ], 404);
+            }
+        } catch (\Throwable $e) {
+            Logger::error($e);
+            return $this->jsonResponse([
+                'success' => false,
+                'message' => 'Internal Server Error'
+            ], 500);
+        }
+    }
+
+    public function getByUser()
+    {
+        try {
+            $books = Book::query()->byUser(Auth::user()['id']);
+
+            if ($books) {
+                return $this->jsonResponse([
+                    'success' => true,
+                    'data' => $books
+                ]);
+            } else {
+                return $this->jsonResponse([
+                    'success' => false,
+                    'message' => 'Books not found'
+                ], 404);
+            }
+        } catch (\Throwable $e) {
+            Logger::error($e);
             return $this->jsonResponse([
                 'success' => false,
                 'message' => 'Internal Server Error'
@@ -154,9 +190,6 @@ class BookController extends Controller
 
         if (empty($data['title'])) {
             $errors['title'] = 'Title is required.';
-        }
-        if (empty($data['author'])) {
-            $errors['author'] = 'Author is required.';
         }
         if (!isset($data['description'])) {
             $errors['description'] = 'Description is required.';
