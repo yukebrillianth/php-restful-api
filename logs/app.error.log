@@ -1,4 +1,11 @@
-[2024-05-22 21:59:18] syntax error, unexpected token "return" in /home/yukebrillianth/PROJECTS/phpmvc/app/Http/Controllers/BookController.php on line 130
-[2024-05-22 22:03:12] SQLSTATE[55000]: Object not in prerequisite state: 7 ERROR:  lastval is not yet defined in this session in /home/yukebrillianth/PROJECTS/phpmvc/app/Core/Database.php on line 153
-[2024-05-22 22:09:37] App\Models\Book::create(): Return value must be of type bool, array returned in /home/yukebrillianth/PROJECTS/phpmvc/app/Models/Book.php on line 53
-[2024-05-22 22:10:16] App\Models\Book::create(): Return value must be of type bool, array returned in /home/yukebrillianth/PROJECTS/phpmvc/app/Models/Book.php on line 53
+[2024-05-23 00:15:55] Unexpected control character found in /home/yukebrillianth/PROJECTS/phpmvc/vendor/firebase/php-jwt/src/JWT.php on line 527
+[2024-05-23 00:16:45] Unexpected control character found in /home/yukebrillianth/PROJECTS/phpmvc/vendor/firebase/php-jwt/src/JWT.php on line 527
+[2024-05-23 00:16:47] Unexpected control character found in /home/yukebrillianth/PROJECTS/phpmvc/vendor/firebase/php-jwt/src/JWT.php on line 527
+[2024-05-23 00:16:54] Unexpected control character found in /home/yukebrillianth/PROJECTS/phpmvc/vendor/firebase/php-jwt/src/JWT.php on line 527
+[2024-05-23 00:16:55] Unexpected control character found in /home/yukebrillianth/PROJECTS/phpmvc/vendor/firebase/php-jwt/src/JWT.php on line 527
+[2024-05-23 00:18:50] Signature verification failed in /home/yukebrillianth/PROJECTS/phpmvc/vendor/firebase/php-jwt/src/JWT.php on line 150
+[2024-05-23 00:34:12] Cannot use object of type stdClass as array in /home/yukebrillianth/PROJECTS/phpmvc/app/Http/Services/Auth.php on line 34
+[2024-05-23 00:34:37] Cannot use object of type stdClass as array in /home/yukebrillianth/PROJECTS/phpmvc/app/Http/Services/Auth.php on line 33
+[2024-05-23 00:35:16] Cannot use object of type stdClass as array in /home/yukebrillianth/PROJECTS/phpmvc/app/Http/Services/Auth.php on line 33
+[2024-05-23 00:35:55] Object of class stdClass could not be converted to string in /home/yukebrillianth/PROJECTS/phpmvc/app/Core/Logger.php on line 22
+[2024-05-23 00:36:13] Cannot use object of type stdClass as array in /home/yukebrillianth/PROJECTS/phpmvc/app/Http/Services/Auth.php on line 35

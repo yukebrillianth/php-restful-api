@@ -7,6 +7,13 @@ class Router
     private static array $routes = [];
     private static array $groupAttributes = [];
 
+    /**
+     * Route Group
+     *
+     * @param array $attributes
+     * @param callable $callback
+     * @return void
+     */
     public static function group(array $attributes, callable $callback): void
     {
         $parentAttributes = self::$groupAttributes;

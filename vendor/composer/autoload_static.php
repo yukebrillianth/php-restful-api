@@ -35,10 +35,15 @@ class ComposerStaticInit87f301ec3d2d7d565abe068f478f54c6
         array (
             'GrahamCampbell\\ResultType\\' => 26,
         ),
+        'F' => 
+        array (
+            'Firebase\\JWT\\' => 13,
+        ),
         'D' => 
         array (
             'Dotenv\\' => 7,
             'DeepCopy\\' => 9,
+            'Database\\Seeders\\' => 17,
         ),
         'A' => 
         array (
@@ -75,6 +80,10 @@ class ComposerStaticInit87f301ec3d2d7d565abe068f478f54c6
         array (
             0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
         ),
+        'Firebase\\JWT\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
+        ),
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
@@ -82,6 +91,10 @@ class ComposerStaticInit87f301ec3d2d7d565abe068f478f54c6
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
+        ),
+        'Database\\Seeders\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/database/seeders',
         ),
         'App\\' => 
         array (

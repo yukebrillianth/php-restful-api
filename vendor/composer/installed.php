@@ -3,13 +3,22 @@
         'name' => 'yukebrillianth/phpmvc',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'daaddbf399f2a0b168bd5bf7162ff3fde27dba13',
+        'reference' => '53fad0d047e4d5a9932a3efaeb8b219dfb51e1ce',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        'firebase/php-jwt' => array(
+            'pretty_version' => 'v6.10.1',
+            'version' => '6.10.1.0',
+            'reference' => '500501c2ce893c824c801da135d02661199f60c5',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../firebase/php-jwt',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'graham-campbell/result-type' => array(
             'pretty_version' => 'v1.1.2',
             'version' => '1.1.2.0',
@@ -301,7 +310,7 @@
         'yukebrillianth/phpmvc' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'daaddbf399f2a0b168bd5bf7162ff3fde27dba13',
+            'reference' => '53fad0d047e4d5a9932a3efaeb8b219dfb51e1ce',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
