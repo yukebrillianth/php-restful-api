@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use App\Core\Database;
 use App\Core\Logger;
 use App\Core\Model;
-use App\Models\Dtos\BookDTO;
 use PDOException;
 
 class Book extends Model
@@ -24,11 +22,25 @@ class Book extends Model
     {
         $query = "SELECT * FROM " . $this->table . " WHERE id = :uuid";
 
-        $this->db->query($query);
-        $this->db->bind(':uuid', $uuid);
-        $this->db->execute();
+        try {
+            $this->db->query($query);
+            $this->db->bind(':uuid', $uuid);
+            $this->db->execute();
 
-        return $this->db->single();
+            return $this->db->single();
+        } catch (PDOException $e) {
+            if ($e->getCode() === '22P02') {
+                return false;
+            } else {
+                Logger::error($e);
+                jsonResponse([
+                    'code' => 500,
+                    'success' => false,
+                    'message' => "Internal Server Error"
+                ], 500);
+                die();
+            }
+        }
     }
 
     public function search(string $keyword): array | false
