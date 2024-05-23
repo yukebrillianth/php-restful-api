@@ -87,13 +87,17 @@ class Database
         try {
             return $this->stmt->execute();
         } catch (PDOException $e) {
-            Logger::error($e);
-            jsonResponse([
-                'code' => 500,
-                'success' => false,
-                'message' => "Internal Server Error"
-            ]);
-            die();
+            if ($e->getCode() === '22P02') {
+                throw $e;
+            } else {
+                Logger::error($e);
+                jsonResponse([
+                    'code' => 500,
+                    'success' => false,
+                    'message' => "Internal Server Error"
+                ], 500);
+                die();
+            }
         }
     }
 
