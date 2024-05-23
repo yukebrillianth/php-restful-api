@@ -123,7 +123,7 @@ class Book extends Model
         FROM books
         JOIN users ON books.author_id = users.id
         WHERE books.author_id = :authorId
-        ORDER BY books.created_at ASC";
+        ORDER BY books.created_at DESC";
 
         $this->db->query($query);
         $this->db->bind(':authorId', $authorId);
