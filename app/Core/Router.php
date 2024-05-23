@@ -101,7 +101,7 @@ class Router
                 'code' => 500,
                 'success' => false,
                 'message' => "Internal Server Error: Too few arguments passed to the function."
-            ]);
+            ], 500);
         } catch (Throwable $e) {
             // Handle ArgumentCountError separately to provide a more specific error message
             Logger::error($e);
@@ -109,7 +109,7 @@ class Router
                 'code' => 500,
                 'success' => false,
                 'message' => "Internal Server Error"
-            ]);
+            ], 500);
         }
 
         header('Content-Type: application/json');
